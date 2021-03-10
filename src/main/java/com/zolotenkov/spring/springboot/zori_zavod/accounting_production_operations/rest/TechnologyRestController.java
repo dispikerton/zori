@@ -23,14 +23,6 @@ public class TechnologyRestController {
     @Autowired
     private OperationRepository operationRepository;
 
-
-    @PostMapping(value = "/operationAdd", produces = MediaType.APPLICATION_JSON_VALUE)
-    private String saveTechnology(@RequestBody int[] array){
-        for (int number : array)
-            System.out.println(number);
-        return "Работает";
-    }
-
     @GetMapping("/tech/{id}/operation/all")
     private ResponseEntity<List<Operation>> allOperationsByTechnology(@PathVariable Long id){
         List<Operation> list = technologyRepository.findById(id).get().getOperations();

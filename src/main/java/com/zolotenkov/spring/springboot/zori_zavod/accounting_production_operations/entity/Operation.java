@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "operation")
+@Table(name = "operation_directory")
 public class Operation implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -79,5 +79,16 @@ public class Operation implements Serializable {
 
     public void setTechnology(Technology technology) {
         this.technology = technology;
+    }
+
+    @Override
+    public String toString() {
+        return "Operation{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", standard=" + standard +
+                ", ratio=" + ratio +
+                ", technology=" + technology +
+                '}';
     }
 }
