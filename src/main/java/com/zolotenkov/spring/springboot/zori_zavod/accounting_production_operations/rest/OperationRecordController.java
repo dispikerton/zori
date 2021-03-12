@@ -9,11 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -25,6 +23,12 @@ public class OperationRecordController {
 
     @Autowired
     private OperationRecordRepository recordRepository;
+
+    @GetMapping("/record/all")
+    private ResponseEntity<List<Object[]>> allOperationsByTechnology(){
+        List<Object[]> allRecords = recordRepository.findAllJoinRecords();
+        return new ResponseEntity<>(allRecords, HttpStatus.OK);
+    }
 
     @PostMapping(value = "/operationAdd", produces = MediaType.APPLICATION_JSON_VALUE)
     private ResponseEntity<List<OperationRecord>> saveOperations(@RequestBody long[] array){

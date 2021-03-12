@@ -1,5 +1,6 @@
 package com.zolotenkov.spring.springboot.zori_zavod;
 
+import org.springframework.beans.factory.BeanFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -8,6 +9,7 @@ public class ZoriZavodApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(ZoriZavodApplication.class, args);
+
     }
 
 }

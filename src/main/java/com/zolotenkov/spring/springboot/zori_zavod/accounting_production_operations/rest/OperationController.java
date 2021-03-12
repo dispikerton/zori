@@ -1,7 +1,7 @@
 package com.zolotenkov.spring.springboot.zori_zavod.accounting_production_operations.rest;
 
-import com.zolotenkov.spring.springboot.zori_zavod.accounting_production_operations.entity.Operation;
 import com.zolotenkov.spring.springboot.zori_zavod.accounting_production_operations.repository.OperationRepository;
+import com.zolotenkov.spring.springboot.zori_zavod.accounting_production_operations.entity.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -16,6 +16,12 @@ public class OperationController {
 
     @Autowired
     private OperationRepository operationRepository;
+
+    @GetMapping(value = "/allTest", produces = MediaType.APPLICATION_JSON_VALUE)
+    private ResponseEntity<List<Operation>> getAllOperationsTest (){
+        List<Operation> list = operationRepository.getAllRecordsTest();
+        return new ResponseEntity<>(list, HttpStatus.OK);
+    }
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Operation> deleteOperation(@PathVariable Long id){
