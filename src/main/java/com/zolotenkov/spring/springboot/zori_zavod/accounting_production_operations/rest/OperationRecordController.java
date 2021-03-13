@@ -2,6 +2,7 @@ package com.zolotenkov.spring.springboot.zori_zavod.accounting_production_operat
 
 
 import com.zolotenkov.spring.springboot.zori_zavod.accounting_production_operations.entity.Operation;
+import com.zolotenkov.spring.springboot.zori_zavod.accounting_production_operations.entity.OperationHistory;
 import com.zolotenkov.spring.springboot.zori_zavod.accounting_production_operations.entity.OperationRecord;
 import com.zolotenkov.spring.springboot.zori_zavod.accounting_production_operations.repository.OperationRecordRepository;
 import com.zolotenkov.spring.springboot.zori_zavod.accounting_production_operations.repository.OperationRepository;
@@ -12,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -25,9 +27,19 @@ public class OperationRecordController {
     private OperationRecordRepository recordRepository;
 
     @GetMapping("/record/all")
-    private ResponseEntity<List<Object[]>> allOperationsByTechnology(){
-        List<Object[]> allRecords = recordRepository.findAllJoinRecords();
-        return new ResponseEntity<>(allRecords, HttpStatus.OK);
+    private List<OperationHistory> allOperationsByTechnology(){
+        List<Object[]> allObjects = recordRepository.findAllJoinRecords();
+        List<OperationHistory> allRecords = new ArrayList<>();
+        allObjects
+                .forEach((objects -> {
+                    OperationHistory oh = new OperationHistory();
+                    oh.setId((Long) objects[0]);
+                    oh.setDate((LocalDate) objects[1]);
+                    oh.setTechnologyName((String) objects[2]);
+                    oh.setOperationName((String) objects[3]);
+                    allRecords.add(oh);
+                }));
+        return allRecords;
     }
 
     @PostMapping(value = "/operationAdd", produces = MediaType.APPLICATION_JSON_VALUE)

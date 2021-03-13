@@ -3,13 +3,12 @@ package com.zolotenkov.spring.springboot.zori_zavod.accounting_production_operat
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "operation_log")
+@Table(name = "operation_record")
 public class OperationRecord {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
