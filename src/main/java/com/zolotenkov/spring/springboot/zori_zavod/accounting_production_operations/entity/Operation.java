@@ -1,7 +1,6 @@
 package com.zolotenkov.spring.springboot.zori_zavod.accounting_production_operations.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import org.springframework.context.annotation.Bean;
 
 import javax.persistence.*;
 import java.io.Serializable;

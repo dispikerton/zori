@@ -6,7 +6,6 @@ import com.zolotenkov.spring.springboot.zori_zavod.accounting_production_operati
 import com.zolotenkov.spring.springboot.zori_zavod.accounting_production_operations.entity.OperationRecord;
 import com.zolotenkov.spring.springboot.zori_zavod.accounting_production_operations.repository.OperationRecordRepository;
 import com.zolotenkov.spring.springboot.zori_zavod.accounting_production_operations.repository.OperationRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -18,20 +17,22 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
+@CrossOrigin
 public class OperationRecordController {
 
-    @Autowired
-    private OperationRepository operationRepository;
+    private final OperationRepository operationRepository;
+    private final OperationRecordRepository recordRepository;
 
-    @Autowired
-    private OperationRecordRepository recordRepository;
+    public OperationRecordController(OperationRepository operationRepository, OperationRecordRepository recordRepository) {
+        this.operationRepository = operationRepository;
+        this.recordRepository = recordRepository;
+    }
 
     @GetMapping("/record/all")
-    private List<OperationHistory> allOperationsByTechnology(){
+    private List<OperationHistory> allOperationsRecords(){
         List<Object[]> allObjects = recordRepository.findAllJoinRecords();
         List<OperationHistory> allRecords = new ArrayList<>();
-        allObjects
-                .forEach((objects -> {
+        allObjects.forEach((objects -> {
                     OperationHistory oh = new OperationHistory();
                     oh.setId((Long) objects[0]);
                     oh.setDate((LocalDate) objects[1]);
@@ -42,13 +43,14 @@ public class OperationRecordController {
         return allRecords;
     }
 
-    @PostMapping(value = "/operationAdd", produces = MediaType.APPLICATION_JSON_VALUE)
-    private ResponseEntity<List<OperationRecord>> saveOperations(@RequestBody long[] array){
+    @PostMapping(value = "/record/add", produces = MediaType.APPLICATION_JSON_VALUE)
+    private ResponseEntity<List<OperationRecord>> saveOperationsRecords(@RequestBody long[] array){
         for (long id : array){
             Operation operation = operationRepository.findById(id).get();
-            OperationRecord or = new OperationRecord();
-            or.setOperation(operation);
-            recordRepository.save(or);
+            OperationRecord record = new OperationRecord();
+            record.setOperation(operation);
+            record.setDate(LocalDate.now());
+            recordRepository.save(record);
         }
         return new ResponseEntity<>(HttpStatus.CREATED);
     }

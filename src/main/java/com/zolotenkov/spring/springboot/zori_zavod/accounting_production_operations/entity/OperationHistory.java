@@ -18,35 +18,35 @@ public class OperationHistory {
     public OperationHistory() {
     }
 
-    public Long getId() {
-        return id;
-    }
-
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public LocalDate getDate() {
-        return date;
     }
 
     public void setDate(LocalDate date) {
         this.date = date;
     }
 
-    public String getTechnologyName() {
-        return technologyName;
-    }
-
     public void setTechnologyName(String technologyName) {
         this.technologyName = technologyName;
     }
 
-    public String getOperationName() {
-        return operationName;
-    }
-
     public void setOperationName(String operationName) {
         this.operationName = operationName;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public String getTechnologyName() {
+        return technologyName;
+    }
+
+    public String getOperationName() {
+        return operationName;
     }
 }

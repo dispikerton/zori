@@ -15,13 +15,16 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
+@CrossOrigin
 public class TechnologyRestController {
 
-    @Autowired
-    private TechnologyRepository technologyRepository;
+    private final TechnologyRepository technologyRepository;
+    private final OperationRepository operationRepository;
 
-    @Autowired
-    private OperationRepository operationRepository;
+    public TechnologyRestController(TechnologyRepository technologyRepository, OperationRepository operationRepository) {
+        this.technologyRepository = technologyRepository;
+        this.operationRepository = operationRepository;
+    }
 
     @GetMapping("/tech/{id}/operation/all")
     private ResponseEntity<List<Operation>> allOperationsByTechnology(@PathVariable Long id){
