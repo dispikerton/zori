@@ -58,4 +58,12 @@ public class Technology implements Serializable {
     public void setOperations(List<Operation> operations) {
         this.operations = operations;
     }
+
+    public Boolean getDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        isDeleted = deleted;
+    }
 }
