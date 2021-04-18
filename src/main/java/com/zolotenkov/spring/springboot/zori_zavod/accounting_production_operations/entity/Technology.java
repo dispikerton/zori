@@ -2,7 +2,6 @@ package com.zolotenkov.spring.springboot.zori_zavod.accounting_production_operat
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.zolotenkov.spring.springboot.zori_zavod.accounting_production_operations.entity.Operation;
-import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -10,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Data
 @Table(name = "technology")
 public class Technology implements Serializable {
     @Id
@@ -63,7 +61,12 @@ public class Technology implements Serializable {
         return isDeleted;
     }
 
-    public void setDeleted(Boolean deleted) {
-        isDeleted = deleted;
+    public void setDeleted(Boolean isDeleted) {
+        this.isDeleted = isDeleted;
+    }
+
+    @PrePersist
+    public void prePersist() {
+        this.isDeleted = false;
     }
 }

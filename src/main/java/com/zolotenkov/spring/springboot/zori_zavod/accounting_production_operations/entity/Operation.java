@@ -1,13 +1,12 @@
 package com.zolotenkov.spring.springboot.zori_zavod.accounting_production_operations.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import lombok.Data;
+
 
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Data
 @Table(name = "operation_directory")
 public class Operation implements Serializable {
     @Id
@@ -90,8 +89,8 @@ public class Operation implements Serializable {
         return isDeleted;
     }
 
-    public void setDeleted(boolean deleted) {
-        this.isDeleted = deleted;
+    public void setDeleted(boolean isDeleted) {
+        this.isDeleted = isDeleted;
     }
 
     @Override
@@ -103,5 +102,10 @@ public class Operation implements Serializable {
                 ", ratio=" + ratio +
                 ", technology=" + technology +
                 '}';
+    }
+
+    @PrePersist
+    public void prePersist() {
+        this.isDeleted = false;
     }
 }
