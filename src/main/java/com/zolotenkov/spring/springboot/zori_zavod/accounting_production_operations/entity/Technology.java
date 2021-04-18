@@ -2,6 +2,7 @@ package com.zolotenkov.spring.springboot.zori_zavod.accounting_production_operat
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.zolotenkov.spring.springboot.zori_zavod.accounting_production_operations.entity.Operation;
+import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -9,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Data
 @Table(name = "technology")
 public class Technology implements Serializable {
     @Id
@@ -22,6 +24,9 @@ public class Technology implements Serializable {
     @OneToMany(orphanRemoval = true, mappedBy = "technology")
     @JsonManagedReference
     List<Operation> operations = new ArrayList<>();
+
+    @Column(name = "isDeleted")
+    private Boolean isDeleted;
 
     public Technology() {
     }

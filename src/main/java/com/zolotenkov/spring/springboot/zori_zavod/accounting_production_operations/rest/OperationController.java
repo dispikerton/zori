@@ -25,15 +25,9 @@ public class OperationController {
         this.technologyRepository = technologyRepository;
     }
 
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Operation> deleteOperation(@PathVariable Long id){
-        operationRepository.deleteById(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
-
     @GetMapping(value = "/all", produces = MediaType.APPLICATION_JSON_VALUE)
     private ResponseEntity<List<Operation>> getAllOperations (){
-        List<Operation> list = operationRepository.findAll();
+        List<Operation> list = operationRepository.findAllByIsDeletedFalse();
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
@@ -55,5 +49,11 @@ public class OperationController {
         operationRepository.save(operation);
 
         return new ResponseEntity<>(operation, headers, HttpStatus.CREATED);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Operation> deleteOperation(@PathVariable Long id){
+        operationRepository.deleteByIdAndIsDeletedFalse(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

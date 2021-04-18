@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api")
@@ -28,7 +29,8 @@ public class TechnologyRestController {
 
     @GetMapping("/tech/{id}/operation/all")
     private ResponseEntity<List<Operation>> allOperationsByTechnology(@PathVariable Long id){
-        List<Operation> list = technologyRepository.findById(id).get().getOperations();
+        Technology technology = technologyRepository.findById(id).get();
+        List<Operation> list = operationRepository.findAllByTechnologyAndAndIsDeletedFalse(technology);
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 

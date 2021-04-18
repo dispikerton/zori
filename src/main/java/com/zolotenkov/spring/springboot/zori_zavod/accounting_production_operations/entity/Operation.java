@@ -1,11 +1,13 @@
 package com.zolotenkov.spring.springboot.zori_zavod.accounting_production_operations.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import lombok.Data;
 
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
+@Data
 @Table(name = "operation_directory")
 public class Operation implements Serializable {
     @Id
@@ -26,6 +28,9 @@ public class Operation implements Serializable {
     @JoinColumn(name = "technology_id")
     @JsonBackReference
     private Technology technology;
+
+    @Column(name = "isDeleted")
+    private Boolean isDeleted;
 
     public Operation() {
     }
@@ -79,6 +84,14 @@ public class Operation implements Serializable {
 
     public void setTechnology(Technology technology) {
         this.technology = technology;
+    }
+
+    public boolean isDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.isDeleted = deleted;
     }
 
     @Override
