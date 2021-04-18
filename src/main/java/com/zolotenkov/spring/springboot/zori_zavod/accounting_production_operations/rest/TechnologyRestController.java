@@ -27,6 +27,7 @@ public class TechnologyRestController {
         this.operationRepository = operationRepository;
     }
 
+    @CrossOrigin
     @GetMapping("/tech/{id}/operation/all")
     private ResponseEntity<List<Operation>> allOperationsByTechnology(@PathVariable Long id){
         Technology technology = technologyRepository.findByIdAndIsDeletedFalse(id);
@@ -34,18 +35,21 @@ public class TechnologyRestController {
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
+    @CrossOrigin
     @GetMapping(value = "/tech/all", produces = MediaType.APPLICATION_JSON_VALUE)
     private ResponseEntity<List<Technology>> getAllTechnologies (){
         List<Technology> list = technologyRepository.findAllByIsDeletedFalse();
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
+    @CrossOrigin
     @GetMapping(value = "/tech/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     private ResponseEntity<Technology> getTechnologyById (@PathVariable Long id){
         Technology technology = technologyRepository.findByIdAndIsDeletedFalse(id);
         return new ResponseEntity<>(technology, HttpStatus.OK);
     }
 
+    @CrossOrigin
     @PostMapping(value = "/tech/add", produces = MediaType.APPLICATION_JSON_VALUE)
     private ResponseEntity<Technology> saveTechnology(@RequestBody Technology technology){
         if (technology == null)
@@ -55,6 +59,7 @@ public class TechnologyRestController {
         return new ResponseEntity<>(technology, HttpStatus.CREATED);
     }
 
+    @CrossOrigin
     @PostMapping(value = "/operation/add", produces = MediaType.APPLICATION_JSON_VALUE)
     private ResponseEntity<Operation> saveOperation(@RequestBody Operation operation){
         if (operation == null)
@@ -64,6 +69,7 @@ public class TechnologyRestController {
         return new ResponseEntity<>(operation, HttpStatus.CREATED);
     }
 
+    @CrossOrigin
     @DeleteMapping("/tech/delete/{techId}")
     private ResponseEntity<Technology> deleteTechnology(@PathVariable Long techId) {
         technologyRepository.deleteById(techId);

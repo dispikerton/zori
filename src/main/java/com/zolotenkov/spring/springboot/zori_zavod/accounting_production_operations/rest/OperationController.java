@@ -25,18 +25,21 @@ public class OperationController {
         this.technologyRepository = technologyRepository;
     }
 
+    @CrossOrigin
     @GetMapping(value = "/all", produces = MediaType.APPLICATION_JSON_VALUE)
     private ResponseEntity<List<Operation>> getAllOperations (){
         List<Operation> list = operationRepository.findAllByIsDeletedFalse();
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
+    @CrossOrigin
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     private ResponseEntity<Operation> getTechnologyById (@PathVariable Long id){
         Operation operation = operationRepository.findById(id).get();
         return new ResponseEntity<>(operation, HttpStatus.OK);
     }
 
+    @CrossOrigin
     @PostMapping("/tech/add/{techId}")
     public ResponseEntity<Operation> addOperation(@PathVariable Long techId,
                                                   @RequestBody Operation operation) {
@@ -51,6 +54,7 @@ public class OperationController {
         return new ResponseEntity<>(operation, headers, HttpStatus.CREATED);
     }
 
+    @CrossOrigin
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Operation> deleteOperation(@PathVariable Long id){
         operationRepository.deleteByIdAndIsDeletedFalse(id);
