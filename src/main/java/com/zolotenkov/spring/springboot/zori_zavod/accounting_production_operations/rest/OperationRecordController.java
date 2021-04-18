@@ -30,6 +30,7 @@ public class OperationRecordController {
         this.recordRepository = recordRepository;
     }
 
+    @CrossOrigin
     @GetMapping("/record/all")
     private List<OperationHistory> allOperationsRecords(){
         List<Object[]> allObjects = recordRepository.findAllJoinRecords();
@@ -45,6 +46,7 @@ public class OperationRecordController {
         return allRecords;
     }
 
+    @CrossOrigin
     @PostMapping(value = "/record/add", produces = MediaType.APPLICATION_JSON_VALUE)
     private ResponseEntity<List<OperationRecord>> saveOperationsRecords(@RequestBody long[] array){
         for (long id : array){
@@ -57,6 +59,7 @@ public class OperationRecordController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
+    @CrossOrigin
     @DeleteMapping("/record/delete/{techId}")
     private ResponseEntity<Technology> deleteOperationRecord(@PathVariable Long techId) {
         recordRepository.deleteById(techId);
