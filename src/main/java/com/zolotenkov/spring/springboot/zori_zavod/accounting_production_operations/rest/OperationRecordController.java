@@ -4,8 +4,10 @@ package com.zolotenkov.spring.springboot.zori_zavod.accounting_production_operat
 import com.zolotenkov.spring.springboot.zori_zavod.accounting_production_operations.entity.Operation;
 import com.zolotenkov.spring.springboot.zori_zavod.accounting_production_operations.entity.OperationHistory;
 import com.zolotenkov.spring.springboot.zori_zavod.accounting_production_operations.entity.OperationRecord;
+import com.zolotenkov.spring.springboot.zori_zavod.accounting_production_operations.entity.Technology;
 import com.zolotenkov.spring.springboot.zori_zavod.accounting_production_operations.repository.OperationRecordRepository;
 import com.zolotenkov.spring.springboot.zori_zavod.accounting_production_operations.repository.OperationRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +21,7 @@ import java.util.List;
 @RequestMapping("/api")
 @CrossOrigin
 public class OperationRecordController {
-
+    
     private final OperationRepository operationRepository;
     private final OperationRecordRepository recordRepository;
 
@@ -54,5 +56,10 @@ public class OperationRecordController {
         }
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
-}
 
+    @DeleteMapping("/record/delete/{techId}")
+    private ResponseEntity<Technology> deleteOperationRecord(@PathVariable Long techId) {
+        recordRepository.deleteById(techId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    };
+}

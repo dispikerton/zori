@@ -36,7 +36,7 @@ public class TechnologyRestController {
     private ResponseEntity<Technology> deleteTechnology(@PathVariable Long techId) {
         technologyRepository.deleteById(techId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    };
+    }
 
     @PostMapping(value = "/tech/add", produces = MediaType.APPLICATION_JSON_VALUE)
     private ResponseEntity<Technology> saveTechnology(@RequestBody Technology technology){
@@ -59,21 +59,6 @@ public class TechnologyRestController {
         this.operationRepository.save(operation);
         return new ResponseEntity<>(operation, headers, HttpStatus.CREATED);
     }
-
-    @PostMapping("/tech/add/{techId}")
-    public ResponseEntity<Operation> addOperation(@PathVariable Long techId,
-                                   @RequestBody Operation operation) {
-        HttpHeaders headers = new HttpHeaders();
-
-        if (operation == null)
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        Technology technology = technologyRepository.findById(techId).get();
-        operation.setTechnology(technology);
-        operationRepository.save(operation);
-
-        return new ResponseEntity<>(operation, headers, HttpStatus.CREATED);
-    }
-
 
     @GetMapping(value = "/tech/all", produces = MediaType.APPLICATION_JSON_VALUE)
     private ResponseEntity<List<Technology>> getAllTechnologies (){

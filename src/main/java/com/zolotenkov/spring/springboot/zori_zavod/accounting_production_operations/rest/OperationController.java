@@ -1,7 +1,10 @@
 package com.zolotenkov.spring.springboot.zori_zavod.accounting_production_operations.rest;
 
+import com.zolotenkov.spring.springboot.zori_zavod.accounting_production_operations.entity.Technology;
 import com.zolotenkov.spring.springboot.zori_zavod.accounting_production_operations.repository.OperationRepository;
 import com.zolotenkov.spring.springboot.zori_zavod.accounting_production_operations.entity.Operation;
+import com.zolotenkov.spring.springboot.zori_zavod.accounting_production_operations.repository.TechnologyRepository;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -15,9 +18,11 @@ import java.util.List;
 public class OperationController {
 
     private final OperationRepository operationRepository;
+    private final TechnologyRepository technologyRepository;
 
-    public OperationController(OperationRepository operationRepository) {
+    public OperationController(OperationRepository operationRepository, TechnologyRepository technologyRepository) {
         this.operationRepository = operationRepository;
+        this.technologyRepository = technologyRepository;
     }
 
     @DeleteMapping("/delete/{id}")
@@ -36,5 +41,19 @@ public class OperationController {
     private ResponseEntity<Operation> getTechnologyById (@PathVariable Long id){
         Operation operation = operationRepository.findById(id).get();
         return new ResponseEntity<>(operation, HttpStatus.OK);
+    }
+
+    @PostMapping("/tech/add/{techId}")
+    public ResponseEntity<Operation> addOperation(@PathVariable Long techId,
+                                                  @RequestBody Operation operation) {
+        HttpHeaders headers = new HttpHeaders();
+
+        if (operation == null)
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        Technology technology = technologyRepository.findById(techId).get();
+        operation.setTechnology(technology);
+        operationRepository.save(operation);
+
+        return new ResponseEntity<>(operation, headers, HttpStatus.CREATED);
     }
 }
